@@ -46,28 +46,11 @@ class App extends Component {
     const width = Number(image.width);
     const height = Number(image.height);
 
-    const leftX = Math.round(width * box.left_col);
-    const rightX = Math.round(width * box.right_col);
-    const topY = Math.round(height * box.top_row);
-    const bottomY = Math.round(height * box.bottom_row);
-
     return{
-      topLeft: {
-        x: leftX,
-        y: topY
-      },
-      topRight:{
-        x: rightX,
-        y: topY
-      },
-      bottomLeft: {
-        x: leftX,
-        y: bottomY
-      },
-      bottomRight: {
-        x: rightX,
-        y: bottomY
-      },
+      leftCol: Math.round(width * box.left_col),
+      rightCol: width - Math.round(width * box.right_col),
+      topRow: Math.round(height * box.top_row),
+      bottomRow: height - Math.round(height * box.bottom_row)
     }
 
   }
