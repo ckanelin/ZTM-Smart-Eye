@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/ztm-smart-eye/static/css/main.ab695cf4.chunk.css",
+    "main.js": "/ztm-smart-eye/static/js/main.6b8a780a.chunk.js",
+    "main.js.map": "/ztm-smart-eye/static/js/main.6b8a780a.chunk.js.map",
+    "runtime-main.js": "/ztm-smart-eye/static/js/runtime-main.4ae1a09f.js",
+    "runtime-main.js.map": "/ztm-smart-eye/static/js/runtime-main.4ae1a09f.js.map",
+    "static/css/2.eb45ad44.chunk.css": "/ztm-smart-eye/static/css/2.eb45ad44.chunk.css",
+    "static/js/2.182bafc5.chunk.js": "/ztm-smart-eye/static/js/2.182bafc5.chunk.js",
+    "static/js/2.182bafc5.chunk.js.map": "/ztm-smart-eye/static/js/2.182bafc5.chunk.js.map",
+    "index.html": "/ztm-smart-eye/index.html",
+    "precache-manifest.3b7e3597ac48e04f44cdd68facdda320.js": "/ztm-smart-eye/precache-manifest.3b7e3597ac48e04f44cdd68facdda320.js",
+    "service-worker.js": "/ztm-smart-eye/service-worker.js",
+    "static/css/2.eb45ad44.chunk.css.map": "/ztm-smart-eye/static/css/2.eb45ad44.chunk.css.map",
+    "static/css/main.ab695cf4.chunk.css.map": "/ztm-smart-eye/static/css/main.ab695cf4.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4ae1a09f.js",
+    "static/css/2.eb45ad44.chunk.css",
+    "static/js/2.182bafc5.chunk.js",
+    "static/css/main.ab695cf4.chunk.css",
+    "static/js/main.6b8a780a.chunk.js"
+  ]
+}
