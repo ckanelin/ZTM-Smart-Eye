@@ -33,30 +33,37 @@ class App extends Component {
     this.state = {
       input: "",
       imageURL: "",
-      box: {}
+      boxes: []
     }
 
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
   }
-
+//[0].region_info.bounding_box
   calculateBoxes = (data) => {
-    const box = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const boxes = data.outputs[0].data.regions;
     const image = document.getElementById('faceImage');
     const width = Number(image.width);
     const height = Number(image.height);
 
-    return{
-      leftCol: Math.round(width * box.left_col),
-      rightCol: width - Math.round(width * box.right_col),
-      topRow: Math.round(height * box.top_row),
-      bottomRow: height - Math.round(height * box.bottom_row)
+    let boxRegions = [];
+
+    for(let i = 0; i < boxes.length; i++){
+      let box = boxes[i].region_info.bounding_box;
+      boxRegions.push({
+        leftCol: Math.round(width * box.left_col),
+        rightCol: width - Math.round(width * box.right_col),
+        topRow: Math.round(height * box.top_row),
+        bottomRow: height - Math.round(height * box.bottom_row)
+      })
     }
+    console.log(boxRegions);
+    return boxRegions
 
   }
 
-  setBox = (box) => {
-    this.setState({box: box});
+  setBox = (boxes) => {
+    this.setState({boxes: boxes});
   }
 
   onChangeInput = (event) => {
@@ -76,7 +83,7 @@ class App extends Component {
   }
 
   render(){
-    const {box, imageURL} = this.state;
+    const {boxes, imageURL} = this.state;
 
     return (
       <div className="App">
@@ -96,7 +103,7 @@ class App extends Component {
           onChangeInput={this.onChangeInput}
           onPressSubmit={this.onPressSubmit}
         />
-        <FaceRecognition box={box} imageURL={imageURL}/>
+        <FaceRecognition boxes={boxes} imageURL={imageURL}/>
       </div>
     );
   }
