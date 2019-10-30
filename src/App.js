@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import Particles from 'react-particles-js';
-import Navigation from './components/navigation/Navigation';
-import Rank from './components/rank/Rank';
-import ImageLinkForm from './components/image-link-form/ImageLinkForm';
-import FaceRecognition from './components/face-recognition/FaceRecognition';
+import SignIn from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
+import Navigation from './components/Navigation/Navigation';
+import Rank from './components/Rank/Rank';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 
 import './App.css';
 //Clarifai
@@ -33,7 +35,8 @@ class App extends Component {
     this.state = {
       input: '',
       imageURL: "",
-      boxes: []
+      boxes: [],
+      route: 'signIn'
     }
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
@@ -57,7 +60,6 @@ class App extends Component {
         bottomRow: height - Math.round(height * box.bottom_row)
       })
     }
-    console.log(boxRegions);
     return boxRegions
 
   }
@@ -82,8 +84,12 @@ class App extends Component {
   
   }
 
+  onChangeRoute = (route) =>{
+    this.setState({route: route});
+  }
+
   render(){
-    const {boxes, imageURL} = this.state;
+    const {boxes, imageURL, route} = this.state;
 
 
     return (
@@ -92,20 +98,32 @@ class App extends Component {
           className="particles" 
           params={params}
         />
-        <Navigation/>
-        <div className="f2 tc">
-          <h1>
-            {'SMART EYE'}
-          </h1>
-        </div>
-        <Rank/>
-        <ImageLinkForm 
-          className="tc"
-          onChangeInput={this.onChangeInput}
-          onPressSubmit={this.onPressSubmit}
-        />
-        <FaceRecognition boxes={boxes} imageURL={imageURL}/>
+        <Navigation onChangeRoute={this.onChangeRoute} route={route}/>
+        {
+          route === 'signIn' ? 
+          <SignIn onChangeRoute={this.onChangeRoute}/> :
+
+          route === 'register'?
+          <Register onChangeRoute={this.onChangeRoute}/> :
+
+          <div>
+            <div className="f2 tc">
+              <h1>
+                {'SMART EYE'}
+              </h1>
+            </div>
+            <Rank/>
+            <ImageLinkForm 
+              className="tc"
+              onChangeInput={this.onChangeInput}
+              onPressSubmit={this.onPressSubmit}
+            />
+            <FaceRecognition boxes={boxes} imageURL={imageURL}/>
+          </div>
+        
+        }
       </div>
+        
     );
   }
 }
