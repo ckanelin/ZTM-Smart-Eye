@@ -4,7 +4,7 @@ import './FaceRecognition.css';
 const FaceRecognition = ({boxes, imageURL}) => {
 
 	const boxRegions = boxes.map(box => {
-		console.log(box);
+
 		return(
 			<div 
 				key = {boxes.indexOf(box)}

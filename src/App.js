@@ -36,7 +36,15 @@ class App extends Component {
       input: '',
       imageURL: "",
       boxes: [],
-      route: 'signIn'
+      route: 'signIn',
+      user:{
+        id: '',
+        name: '',
+        email: '',
+        password: '',
+        entries: 0,
+        date: ''
+      }
     }
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
@@ -79,7 +87,21 @@ class App extends Component {
     this.setState({imageURL: input});
 
     app.models.predict(Clarifai.FACE_DETECT_MODEL, input)
-    .then( response => this.setBox(this.calculateBoxes(response)) )
+    .then( response => {
+      if(response){
+        fetch('http://localhost:3000/image',{
+          method: 'put',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id
+          })
+        })
+        .then(response => response.json())
+        .then(count => {
+          this.setState(Object.assign(this.state.user, {entries:count}))
+        })
+      }
+      this.setBox(this.calculateBoxes(response)) })
     .catch(err => console.log(err));
   
   }
@@ -88,8 +110,22 @@ class App extends Component {
     this.setState({route: route});
   }
 
+  onUpdateUser = (user) => {
+    this.setState({user: 
+      {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      entries: user.entries,
+      date: user.date
+      }
+    })
+  }
+
   render(){
     const {boxes, imageURL, route} = this.state;
+    const {name, entries} = this.state.user;
 
 
     return (
@@ -101,10 +137,16 @@ class App extends Component {
         <Navigation onChangeRoute={this.onChangeRoute} route={route}/>
         {
           route === 'signIn' ? 
-          <SignIn onChangeRoute={this.onChangeRoute}/> :
+          <SignIn 
+            onChangeRoute={this.onChangeRoute}
+            onUpdateUser={this.onUpdateUser}
+          /> :
 
           route === 'register'?
-          <Register onChangeRoute={this.onChangeRoute}/> :
+          <Register 
+            onChangeRoute={this.onChangeRoute} 
+            onUpdateUser={this.onUpdateUser} 
+          /> :
 
           <div>
             <div className="f2 tc">
@@ -112,7 +154,7 @@ class App extends Component {
                 {'SMART EYE'}
               </h1>
             </div>
-            <Rank/>
+            <Rank name={name} entries={entries}/>
             <ImageLinkForm 
               className="tc"
               onChangeInput={this.onChangeInput}
