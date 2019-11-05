@@ -28,24 +28,27 @@ const app = new Clarifai.App({
 });
 
 
+const initialState = {
+  input: '',
+  imageURL: "",
+  boxes: [],
+  route: 'signIn',
+  user:{
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    entries: 0,
+    date: ''
+  }
+}
+
+
 class App extends Component {
 
   constructor(){
     super();
-    this.state = {
-      input: '',
-      imageURL: "",
-      boxes: [],
-      route: 'signIn',
-      user:{
-        id: '',
-        name: '',
-        email: '',
-        password: '',
-        entries: 0,
-        date: ''
-      }
-    }
+    this.state = initialState;
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onPressSubmit = this.onPressSubmit.bind(this);
   }
@@ -100,6 +103,7 @@ class App extends Component {
         .then(count => {
           this.setState(Object.assign(this.state.user, {entries:count}))
         })
+        .catch(err => console.log(err))
       }
       this.setBox(this.calculateBoxes(response)) })
     .catch(err => console.log(err));
@@ -107,7 +111,11 @@ class App extends Component {
   }
 
   onChangeRoute = (route) =>{
-    this.setState({route: route});
+    if(route !== 'signOut'){
+      this.setState({route: route});
+    }else{
+      this.setState(initialState);
+    }
   }
 
   onUpdateUser = (user) => {

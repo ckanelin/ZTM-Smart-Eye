@@ -9,7 +9,7 @@ const Navigation = ({onChangeRoute, route}) =>{
 			<Logo/>
 			<p 
 				className="f3 link dim black underline pa3 pointer"
-				onClick = {() => onChangeRoute('signIn')}>
+				onClick = {() => onChangeRoute('signOut')}>
 			{'Sign Out'}
 			</p>
 		</nav>
